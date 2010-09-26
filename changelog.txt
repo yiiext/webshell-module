@@ -1,5 +1,5 @@
-next
-----
+1.1
+---
 - Changed shorttags to echo (Sam Dark).
 
 1.0
