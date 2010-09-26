@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title><?=$this->pageTitle?></title>
+    <title><?php echo $this->pageTitle?></title>
 </head>
 <body>
-<?=$content?>
+<?php echo $content?>
 </body>
 </html>
