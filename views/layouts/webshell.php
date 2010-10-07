@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="<?php echo Yii::app()->charset?>">
     <title><?php echo $this->pageTitle?></title>
 </head>
 <body>

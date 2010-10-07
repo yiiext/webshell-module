@@ -8,7 +8,7 @@ class DefaultController extends CController {
     }
 
     function actionLogin(){
-        
+
     }
 
     function actionIndex(){
@@ -70,8 +70,8 @@ class DefaultController extends CController {
 
         ob_start();
         $runner->run($tokens);
-        $out = ob_get_clean();
-        echo htmlentities($out, null, 'utf-8');
+
+        echo htmlentities(ob_get_clean, null, Yii::app()->charset);
     }
 
     /**
