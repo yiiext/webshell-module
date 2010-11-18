@@ -71,7 +71,7 @@ class DefaultController extends CController {
         ob_start();
         $runner->run($tokens);
 
-        echo htmlentities(ob_get_clean, null, Yii::app()->charset);
+        echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
     }
 
     /**
