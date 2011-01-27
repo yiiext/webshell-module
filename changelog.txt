@@ -1,5 +1,5 @@
-next
-----
+1.2
+---
 - Changed charset to application default (Sam Dark).
 - Moved all JS code into own namespace (Sam Dark).
 

@@ -9,7 +9,7 @@ Yii::setPathOfAlias('webshell', dirname(__FILE__));
  *
  * See readme for installation instructions.
  *
- * @version 1.1
+ * @version 1.2
  * @author Alexander Makarov <sam@rmcreative.ru>
  * @license BSD
  */
