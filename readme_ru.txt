@@ -6,6 +6,10 @@ Yii web shell
 Для работы используется та же конфигурация, что и у основного приложения,
 то есть если работает приложение, будет работать и консоль.
 
+Так как при работе с веб-приложением у нас недоступен STDIN, то команды вроде
+`yiic migrate` в интерактивном режиме работать не будут. Именно для `migrate`
+это решается установкой флага `interactive` в false.
+
 Установка
 ---------
 
@@ -15,33 +19,38 @@ Yii web shell
 ~~~
 [php]
 return array(
-    …
-    'modules'=>array(
-        'webshell'=>array(
-            'class'=>'ext.yiiext.modules.webshell.WebShellModule',
-            // URL, на который будет редирект после ввода 'exit'
-            'exitUrl' => '/',
-            // опции для wterm
-            'wtermOptions' => array(
-                // строка запроса в стиле linux
-                'PS1' => '%',
-            ),
-            // дополнительные команды (см. далее)
-            'commands' => array(
-                'test' => array('js:function(){return "Hello, world!";}', 'Just a test.'),
-            ),
-            // раскомментировать для отключения yiic
-            // 'useYiic' => false,
+	…
+	'modules'=>array(
+		'webshell'=>array(
+			'class'=>'ext.yiiext.modules.webshell.WebShellModule',
+			// URL, на который будет редирект после ввода 'exit'
+			'exitUrl' => '/',
+			// опции для wterm
+			'wtermOptions' => array(
+				// строка запроса в стиле linux
+				'PS1' => '%',
+			),
+			// дополнительные команды (см. далее)
+			'commands' => array(
+				'test' => array('js:function(){return "Hello, world!";}', 'Just a test.'),
+			),
+			// раскомментировать для отключения yiic
+			// 'useYiic' => false,
 
-            // добавляем команды yiic из нестандартных директорий
-            'yiicCommandMap' => array(
-                'email'=>array(
-	                'class'=>'ext.mailer.MailerCommand',
-	                'from'=>'sam@rmcreative.ru',
-	            ),
-            ),
-        ),
-    ),
+			// добавляем команды yiic из нестандартных директорий
+			'yiicCommandMap' => array(
+				'email'=>array(
+					'class'=>'ext.mailer.MailerCommand',
+					'from'=>'sam@rmcreative.ru',
+				),
+				'migrate' => array(
+					'class' => 'system.cli.commands.MigrateCommand',
+					'interactive'=>false,
+				),
+			),
+
+		),
+	),
 )
 ~~~
 

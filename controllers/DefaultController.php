@@ -68,9 +68,8 @@ class DefaultController extends CController {
 		$runner->commands=$this->getModule()->yiicCommandMap;
 		$runner->addCommands($commandPath);
 
-        ob_start();
-        $runner->run($tokens);
-
+		ob_start();
+		$runner->run($tokens);
         echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
     }
 

@@ -1,12 +1,20 @@
+1.2.1
+-----
+
+- Better error handling (samdark)
+
 1.2
 ---
-- Changed charset to application default (Sam Dark).
-- Moved all JS code into own namespace (Sam Dark).
+
+- Changed charset to application default (samdark).
+- Moved all JS code into own namespace (samdark).
 
 1.1
 ---
-- Changed shorttags to echo (Sam Dark).
+
+- Changed shorttags to echo (samdark).
 
 1.0
 ---
-- Initial release (Sam Dark).
+
+- Initial release (samdark).

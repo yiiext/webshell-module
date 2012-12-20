@@ -9,6 +9,9 @@
  * Command History.
  * Commandline Editing.
  *
+ * CHANGELOG for 0.0.6 (Alexander Makarov):
+ * - Errors are outputted to console as well as successes.
+ *
  * CHANGELOG for 0.0.5 (Alexander Makarov):
  * - Fixed CONTENT_CLASS usage.
  * - Output scrolls down automatically.
@@ -286,7 +289,9 @@
                             update_content(get_current_prompt(), value, data)
                         };
 
-                        $[ settings.AJAX_METHOD.toLowerCase() ](key, to_send, on_complete);
+                        $[ settings.AJAX_METHOD.toLowerCase() ](key, to_send, on_complete).error(function(data){
+							update_content(get_current_prompt(), value, data.responseText);
+						});
                     }
                 };
 
