@@ -1,7 +1,15 @@
 <?php
-class DefaultController extends CController {
+namespace app\modules\webshell\controllers;
+
+use Yii;
+use yii\web\Controller;
+use yii\helpers\Url;
+use yii\helpers\Json;
+use yii\web\JqueryAsset;
+use yii\console;
+
+class DefaultController extends Controller {
     public $layout='webshell';
-    public $pageTitle = 'Yii web shell';
 
     function actionError(){
         echo "Error.";
@@ -14,7 +22,7 @@ class DefaultController extends CController {
     function actionIndex(){
         $this->registerAssets();
 
-        $commands = $this->getModule()->commands;
+        $commands = Yii::$app->getModule("webshell")->commands;
         $commandsConfig = array();
         foreach($commands as $name => $command){
             if(is_array($command[0])){
@@ -37,20 +45,20 @@ class DefaultController extends CController {
         }
 
         $config = array(
-            'wtermOptions' => $this->getModule()->wtermOptions,
+            'wtermOptions' => Yii::$app->getModule("webshell")->wtermOptions,
             'commands' => $commandsConfig,
             'helpText' => $this->getHelpText(),
-            'exitUrl' => $this->createAbsoluteUrl($this->getModule()->exitUrl),
+            'exitUrl' => Url::toRoute(Yii::$app->getModule("webshell")->exitUrl),
         );
 
-        Yii::app()->clientScript->registerScript('webshell.config', 'var webshell = '.CJavaScript::encode($config).';', CClientScript::POS_HEAD);
+        $this->view->registerJs('var webshell = '.Json::encode($config).';', yii\web\View::POS_HEAD);
 
-		$this->render('index');
-	}
+	return $this->render('index');
+    }
 
     protected function normalizeUrl($url){
         if(is_array($url))
-            return $this->createAbsoluteUrl($url[0]);
+            return Url::toRoute($url[0]);
 
         return $url;
     }
@@ -62,15 +70,22 @@ class DefaultController extends CController {
      */
     function actionYiic(){
         $tokens = explode(" ", $_GET['tokens']);
-        $commandPath = Yii::app()->getBasePath().DIRECTORY_SEPARATOR.'commands';
+        $config = require(__DIR__ . '/../../../config/console.php');
 
-		$runner=new CConsoleCommandRunner();
-		$runner->commands=$this->getModule()->yiicCommandMap;
-		$runner->addCommands($commandPath);
+        define('STDOUT',fopen('php://stdout', 'r'));
+        
+        $app = new \yii\console\Application($config);
+        $app->init();
+                             
+        ob_start();
+        
+        if(count($tokens) > 1){
+            $app->runAction($tokens[1],array_slice($tokens,1));
+        } else {
+            $app->runAction("",array());
+        }
 
-		ob_start();
-		$runner->run($tokens);
-        echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
+        echo htmlentities(ob_get_clean(), null, Yii::$app->charset);
     }
 
     /**
@@ -79,7 +94,7 @@ class DefaultController extends CController {
      */
     protected function getHelpText(){
         $out = array();
-        $commands = $this->getModule()->commands;
+        $commands = Yii::$app->getModule("webshell")->commands;
         foreach($commands as $name => $command){
             $out[] = $name."\t".$command[1];
         }
@@ -93,26 +108,18 @@ class DefaultController extends CController {
      * @return void
      */
     private function registerAssets(){
-        Yii::app()->clientScript->registerCssFile(
-			Yii::app()->assetManager->publish(
-                Yii::getPathOfAlias('webshell.assets').'/wterm.css'
-			)
-		);
+        $this->view->registerCssFile(
+            Yii::$app->assetManager->publish('@webshell/assets/wterm.css')[1]
+	);
+        
+        $this->view->registerJsFile(
+            Yii::$app->assetManager->publish('@webshell/assets/wterm.jquery.js')[1],
+            JqueryAsset::className()
+        );
 
-        Yii::app()->clientScript->registerCoreScript('jquery');
-
-        Yii::app()->clientScript->registerScriptFile(
-			Yii::app()->assetManager->publish(
-				Yii::getPathOfAlias('webshell.assets').'/wterm.jquery.js'
-			),
-            CClientScript::POS_END
-		);
-
-        Yii::app()->clientScript->registerScriptFile(
-			Yii::app()->assetManager->publish(
-				Yii::getPathOfAlias('webshell.assets').'/webshell.js'
-			),
-            CClientScript::POS_END
-		);
+        $this->view->registerJsFile(
+            Yii::$app->assetManager->publish('@webshell/assets/webshell.js')[1],
+            JqueryAsset::className()
+        );
     }
 }

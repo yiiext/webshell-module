@@ -1,5 +1,9 @@
 <?php
-Yii::setPathOfAlias('webshell', dirname(__FILE__));
+namespace app\modules\webshell;
+
+use Yii;
+
+Yii::setAlias('webshell', dirname(__FILE__));
 
 /**
  * Web shell module
@@ -13,7 +17,7 @@ Yii::setPathOfAlias('webshell', dirname(__FILE__));
  * @author Alexander Makarov <sam@rmcreative.ru>
  * @license BSD
  */
-class WebShellModule extends CWebModule {
+class WebShellModule extends \yii\base\Module {
     /**
      * Path that will be loaded on 'exit' command
      *

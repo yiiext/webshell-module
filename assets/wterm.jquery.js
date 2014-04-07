@@ -256,7 +256,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                var value = input.attr('value');
+                var value = input.val();
 
                 if (settings.HISTORY) {
                     if (history.length > settings.HISTORY_ENTRIES) history.shift();
@@ -371,7 +371,7 @@
 
                         if (settings.AUTOCOMPLETE) {
                             var commands = [ ];
-                            var current_value = input.attr('value');
+                            var current_value = input.val();
                             // Command Completion
                             if (current_value.match(/^[^\s]{0,}$/)) {
                                 for (i in dispatch) {
