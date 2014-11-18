@@ -1,0 +1,21 @@
+{
+    "name": "yiiext/webshell-module",
+    "description": "Web shell for Yii allows you to run console commands from your browser. Can be useful for both no-ssh webservers and console-style administration modules.",
+    "keywords": ["yii", "extension", "webshell"],
+    "homepage": "https://github.com/yiiext/webshell-module",
+    "type": "yii-extension",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Alexander Makarov",
+            "email": "sam@rmcreative.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload" : {
+        "classmap" : ["WebShellModule.php"]
+    },
+    "require": {
+        "php": ">=5.1.0"
+    }
+}

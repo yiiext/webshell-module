@@ -1,3 +1,8 @@
+1.2.2
+-----
+
+- Fixed JS TypeError: undefined is not an object (evaluating 'value.split') for new version of jQuery (im-kulikov)
+
 1.2.1
 -----
 
