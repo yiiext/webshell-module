@@ -69,3 +69,5 @@ crashlytics-build.properties
 sftp-config.json
 
 
+
+/vendor/
