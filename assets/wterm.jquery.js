@@ -256,7 +256,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                var value = input.attr('value');
+                var value = input.val();
 
                 if (settings.HISTORY) {
                     if (history.length > settings.HISTORY_ENTRIES) history.shift();
@@ -264,7 +264,8 @@
                 }
 
                 // Reset The Input
-                input.attr('value', '');
+                // input.attr('value', '');
+                input.val('');
                 var tokens = value.split(/\s+/);
                 var key = tokens[0];
 

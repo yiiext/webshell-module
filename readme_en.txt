@@ -15,8 +15,7 @@ Installing
 
 To use web shell, you must include it as a module in the application configuration like the following:
 
-~~~
-[php]
+```php
 return array(
 	…
 	'modules'=>array(
@@ -50,7 +49,7 @@ return array(
 		),
 	),
 )
-~~~
+```
 
 With the above configuration, you will be able to access web shell in your browser using
 the following URL:
@@ -60,8 +59,7 @@ http://localhost/path/to/index.php?r=webshell
 If your application is using path-format URLs with some customized URL rules, you may need to add
 the following URLs in your application configuration in order to access web shell module:
 
-~~~
-[php]
+```php
 'components'=>array(
     'urlManager'=>array(
         'urlFormat'=>'path',
@@ -73,7 +71,7 @@ the following URLs in your application configuration in order to access web shel
         ),
     )
 )
-~~~
+```
 
 You can then access web shell via:
 
@@ -86,8 +84,7 @@ You can add both shell commands and yiic commands.
 
 Shell commands are configured via commands property of `WebShellModule`:
 
-~~~
-[php]
+```php
 'commands' => array(
     // js callback as a command
     'test' => array('js:function(tokens){return "Hello, world!";}', 'Just a test.'),
@@ -110,17 +107,16 @@ Shell commands are configured via commands property of `WebShellModule`:
         'Advanced command.',
     ),
 ),
-~~~
+```
 
 Callback for a shell command should look like this:
 
-~~~
-[php]
+```php
 function actionMyCommandHandler(){
     $tokens = explode(" ", $_GET['tokens']);
     print_r($tokens);
 }
-~~~
+```
 
 To learn about creating custom yiic commands you can read "[Console Applications](http://www.yiiframework.com/doc/guide/topics.console)".
 
@@ -128,8 +124,7 @@ Security
 --------
 There are two module settings that will help you to keep web console secure:
 
-~~~
-[php]
+```php
 // Allowed IPs, localhost by default. Set to false to allow all IPs.
 'ipFilters' => array('127.0.0.1','::1'),
 // Valid PHP callback that returns if user should be allowed to use web shell.
@@ -137,7 +132,7 @@ There are two module settings that will help you to keep web console secure:
 'checkAccessCallback' => function($controller, $action){
     return !Yii::app()->user->isGuest;
 }
-~~~
+```
 
 
 Special thanks
