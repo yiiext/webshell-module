@@ -256,7 +256,6 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                // var value = input.attr('value');
                 var value = input.val();
 
                 if (settings.HISTORY) {
